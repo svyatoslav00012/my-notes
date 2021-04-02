@@ -1,0 +1,303 @@
+### NoDocs ###
+GET     /                       controllers.HomeController.index
+
+
+###
+#tags:
+#- Test
+#summary: Hello
+#operationId: Hello
+#produces:
+#- text/plain
+#parameters:
+#- in: query
+#  name: name
+#responses:
+#  '200':
+#    description: success
+#  '500':
+#    description: Internal server error
+###
+GET     /hello                      controllers.HomeController.hello(name: String ?= "world")
+
+
+
+
+
+########################################################################################################################
+##################################################### A U T H ##########################################################
+########################################################################################################################
+
+
+###
+#tags:
+#- Auth
+#summary: SignIn
+#operationId: SignIn
+#consumes: application/json
+#produces:
+#- application/json
+#parameters:
+#- in: body
+#  name: Credentials
+#  required: true
+#  schema:
+#    "$ref": "#/definitions/models.dtos.Credentials"
+#responses:
+#  '200':
+#    description: success
+#    schema:
+#      "$ref": "#/definitions/models.dtos.UserDTO"
+#  '417':
+#    description: Wrong credentials
+#  '422':
+#    description: WrongJson
+#  '500':
+#    description: Internal server error
+###
+POST    /auth/signin                       controllers.AuthController.signIn
+
+###
+#tags:
+#- Auth
+#summary: SignUp
+#operationId: SignUp
+#consumes: application/json
+#produces:
+#- text/plain
+#parameters:
+#- in: body
+#  name: Credentials
+#  required: true
+#  schema:
+#    "$ref": "#/definitions/models.dtos.Credentials"
+#responses:
+#  '200':
+#    description: success
+#  '409':
+#    description: UserAlreadyExists
+#  '422':
+#    description: WrongJson
+#  '500':
+#    description: Internal server error
+###
+POST    /auth/signup                       controllers.AuthController.signUp
+
+
+###
+#tags:
+#- Auth
+#summary: ConfirmEmail
+#operationId: ConfirmEmail
+#produces:
+#- text/plain
+#parameters:
+#- in: query
+#  name: token
+#  required: true
+#responses:
+#  '200':
+#    description: success
+#  '417':
+#    description: Token broken or expired
+#  '500':
+#    description: Internal server error
+###
+POST    /auth/email/confirm                      controllers.AuthController.confirmEmail(token: String)
+
+
+###
+#tags:
+#- Auth
+#summary: SignOut
+#operationId: SignOut
+#produces:
+#- text/plain
+#responses:
+#  '200':
+#    description: success
+#  '500':
+#    description: Internal server error
+###
+DELETE    /auth/signout                       controllers.AuthController.signOut
+
+
+
+
+
+########################################################################################################################
+##################################################### U S E R ##########################################################
+########################################################################################################################
+
+###
+#tags:
+#- User
+#summary: Get current user
+#operationId: GetCurrentUser
+#produces:
+#- application/json
+#responses:
+#  '200':
+#    description: success
+#    schema:
+#      "$ref": "#/definitions/models.dtos.UserDTO"
+#  '401':
+#    description: Unauthorized
+#  '404':
+#    description: User not found
+#  '500':
+#    description: Internal server error
+###
+GET    /user/current                       controllers.UserController.getCurrentUser
+
+
+
+
+
+
+
+
+########################################################################################################################
+##################################################### N O T E ##########################################################
+########################################################################################################################
+
+###
+#tags:
+#- Note
+#summary: Get all notes
+#operationId: GetAllNotes
+#produces:
+#- application/json
+#responses:
+#  '200':
+#    description: success
+#  '401':
+#    description: Unauthorized
+#  '500':
+#    description: Internal server error
+###
+GET    /note/all                       controllers.NoteController.getAllAll
+
+###
+#tags:
+#- Note
+#summary: Get current user notes
+#operationId: GetCurentUserNotes
+#produces:
+#- application/json
+#responses:
+#  '200':
+#    description: success
+#  '401':
+#    description: Unauthorized
+#  '500':
+#    description: Internal server error
+###
+GET    /note                       controllers.NoteController.getAll
+
+###
+#tags:
+#- Note
+#summary: Get note by id
+#operationId: GetNoteById
+#produces:
+#- application/json
+#responses:
+#  '200':
+#    description: success
+#  '401':
+#    description: Unauthorized
+#  '403':
+#    description: Not your note
+#  '404':
+#    description: Not found
+#  '500':
+#    description: Internal server error
+###
+GET    /note/:noteId                       controllers.NoteController.getById(noteId: String)
+
+###
+#tags:
+#- Note
+#summary: Create note
+#operationId: CreateNote
+#consumes: application/json
+#produces:
+#- text/plain
+#parameters:
+#- in: body
+#  name: NoteCreateDTO
+#  required: true
+#  schema:
+#    "$ref": "#/definitions/models.dtos.NoteCreateDTO"
+#responses:
+#  '200':
+#    description: success
+#  '401':
+#    description: Unauthorized
+#  '422':
+#    description: Wrong json
+#  '500':
+#    description: Internal server error
+###
+POST    /note                       controllers.NoteController.create
+
+###
+#tags:
+#- Note
+#summary: Update note
+#operationId: UpdateNote
+#consumes: application/json
+#produces:
+#- text/plain
+#parameters:
+#- in: body
+#  name: NoteEditDTO
+#  required: true
+#  schema:
+#    "$ref": "#/definitions/models.dtos.NoteEditDTO"
+#responses:
+#  '200':
+#    description: success
+#  '401':
+#    description: Unauthorized
+#  '403':
+#    description: Not your note
+#  '404':
+#    description: Not found
+#  '422':
+#    description: Wrong json
+#  '500':
+#    description: Internal server error
+###
+PUT    /note                       controllers.NoteController.update
+
+###
+#tags:
+#- Note
+#summary: Delete note
+#operationId: DeleteNote
+#consumes: application/json
+#produces:
+#- text/plain
+#responses:
+#  '200':
+#    description: success
+#  '401':
+#    description: Unauthorized
+#  '403':
+#    description: Not your note
+#  '404':
+#    description: Not found
+#  '500':
+#    description: Internal server error
+###
+DELETE    /note/:noteId                       controllers.NoteController.delete(noteId: String)
+
+### NoDocs ###
+GET           /docs/swagger-ui/*file                 controllers.Assets.at(path:String="/public/lib/swagger-ui", file:String)
+
+### NoDocs ###
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+      
