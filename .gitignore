@@ -13,5 +13,7 @@ dist
 /.project
 /RUNNING_PID
 /.settings
-ci-cd
+ci-cd/dev-compose/mongo-data
+ci-cd/dev-compose/postgres-data
+ci-cd/dev-compose/redis-data
 .bsp
